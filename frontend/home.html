@@ -1,0 +1,566 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>KnowThySelf | Home</title>
+
+    <link
+      href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <style>
+      :root {
+        --bg-dark: #00050a;
+        --highlight: #00f2ff;
+        --contrast: #2979ff;
+        --text-main: #ffffff;
+        --text-muted: #8ba4b6;
+
+        --glass-bg: linear-gradient(
+          135deg,
+          rgba(255, 255, 255, 0.03),
+          rgba(255, 255, 255, 0.01)
+        );
+        --glass-border: rgba(255, 255, 255, 0.08);
+        --glass-shine: rgba(255, 255, 255, 0.15);
+      }
+
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      body {
+        font-family: "Rajdhani", sans-serif;
+        background: var(--bg-dark);
+        color: var(--text-main);
+        min-height: 100vh;
+        overflow-x: hidden;
+      }
+
+      .animated-bg {
+        position: fixed;
+        inset: 0;
+        z-index: -2;
+        background: radial-gradient(
+          circle at 50% 50%,
+          #051525 0%,
+          #00050a 100%
+        );
+        background-size: 200% 200%;
+        animation: deepPulse 15s ease infinite alternate;
+      }
+      @keyframes deepPulse {
+        0% {
+          background-position: 0% 50%;
+        }
+        100% {
+          background-position: 100% 50%;
+        }
+      }
+
+      #particleCanvas {
+        position: fixed;
+        inset: 0;
+        z-index: -1;
+        opacity: 0.6;
+      }
+
+      header {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 40px 20px 10px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+      .brand {
+        font-size: 1.3rem;
+        font-weight: 700;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        color: var(--highlight);
+        text-shadow: 0 0 15px rgba(0, 242, 255, 0.4);
+      }
+      .nav {
+        display: flex;
+        gap: 12px;
+        flex-wrap: wrap;
+      }
+      .nav a {
+        color: var(--text-muted);
+        text-decoration: none;
+        font-weight: 600;
+        letter-spacing: 1px;
+        padding: 10px 14px;
+        border-radius: 30px;
+        border: 1px solid rgba(255, 255, 255, 0.12);
+        background: rgba(255, 255, 255, 0.02);
+        transition: 0.25s;
+      }
+      .nav a:hover {
+        color: var(--highlight);
+        border-color: var(--highlight);
+        box-shadow: 0 0 15px rgba(0, 242, 255, 0.2);
+      }
+
+      .hero {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 30px 20px 40px;
+        display: grid;
+        gap: 25px;
+        grid-template-columns: 1.1fr 0.9fr;
+        align-items: center;
+      }
+
+      .hero-left h1 {
+        font-size: clamp(2.6rem, 5vw, 4.3rem);
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 3px;
+        color: var(--highlight);
+        text-shadow: 0 0 25px rgba(0, 242, 255, 0.35);
+        line-height: 1.05;
+        margin-bottom: 12px;
+      }
+      .hero-left p {
+        font-size: 1.25rem;
+        color: #d0dbe6;
+        line-height: 1.65;
+        max-width: 620px;
+      }
+
+      .cta-row {
+        margin-top: 22px;
+        display: flex;
+        gap: 14px;
+        flex-wrap: wrap;
+      }
+
+      .btn-glow {
+        display: inline-block;
+        padding: 16px 36px;
+        background: rgba(0, 242, 255, 0.05);
+        border: 1px solid var(--highlight);
+        color: var(--highlight);
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 3px;
+        border-radius: 10px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        text-decoration: none;
+        text-shadow: 0 0 8px var(--highlight);
+      }
+      .btn-glow:hover {
+        background: var(--highlight);
+        color: #000;
+        box-shadow: 0 0 40px rgba(0, 242, 255, 0.55);
+        transform: translateY(-2px);
+      }
+
+      .btn-ghost {
+        padding: 16px 30px;
+        border-radius: 10px;
+        background: rgba(255, 255, 255, 0.02);
+        border: 1px solid rgba(255, 255, 255, 0.14);
+        color: var(--text-muted);
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 3px;
+        cursor: pointer;
+        transition: 0.25s;
+      }
+      .btn-ghost:hover {
+        color: #fff;
+        border-color: var(--contrast);
+        box-shadow: 0 0 30px rgba(41, 121, 255, 0.25);
+      }
+
+      .glass-card {
+        background: var(--glass-bg);
+        backdrop-filter: blur(25px);
+        -webkit-backdrop-filter: blur(25px);
+        border: 1px solid var(--glass-border);
+        border-top: 1px solid var(--glass-shine);
+        border-left: 1px solid var(--glass-shine);
+        border-radius: 22px;
+        box-shadow: 0 30px 60px rgba(0, 0, 0, 0.65);
+        padding: 26px;
+        position: relative;
+        overflow: hidden;
+      }
+      .glass-card::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 3px;
+        background: linear-gradient(
+          90deg,
+          transparent,
+          var(--highlight),
+          transparent
+        );
+        box-shadow: 0 0 12px var(--highlight);
+      }
+
+      .hero-right .glass-card h2 {
+        font-size: 1.35rem;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        margin-bottom: 14px;
+      }
+      .mini {
+        color: var(--text-muted);
+        font-size: 1.1rem;
+        line-height: 1.6;
+      }
+      .chip-grid {
+        margin-top: 18px;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 10px;
+      }
+      .chip {
+        padding: 10px 12px;
+        border-radius: 14px;
+        border: 1px solid rgba(255, 255, 255, 0.12);
+        background: rgba(255, 255, 255, 0.02);
+        color: #d0dbe6;
+        font-weight: 600;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+        font-size: 0.95rem;
+      }
+      .chip span {
+        color: var(--highlight);
+        font-weight: 700;
+      }
+
+      .sections {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 10px 20px 60px;
+        display: grid;
+        gap: 20px;
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .section-title {
+        font-size: 1.3rem;
+        text-transform: uppercase;
+        letter-spacing: 3px;
+        color: #fff;
+        margin-bottom: 10px;
+        text-shadow: 0 0 12px rgba(0, 242, 255, 0.15);
+      }
+      .section-text {
+        color: #d0dbe6;
+        font-size: 1.1rem;
+        line-height: 1.75;
+        text-align: justify;
+      }
+
+      footer {
+        text-align: center;
+        padding: 30px 0 22px;
+        color: var(--text-muted);
+        letter-spacing: 2px;
+        opacity: 0.75;
+      }
+
+      @media (max-width: 900px) {
+        .hero {
+          grid-template-columns: 1fr;
+        }
+        .sections {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      .fade-out {
+        opacity: 0;
+        transition: opacity 0.5s ease;
+      }
+
+      /* Contact card should not stretch full width */
+      #contact {
+        max-width: 650px;
+        margin: 0 auto;
+        grid-column: 1 / -1; /* keeps it on its own row */
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="animated-bg"></div>
+    <canvas id="particleCanvas"></canvas>
+
+    <header>
+      <div class="brand">Know Thy Self</div>
+      <div class="nav">
+        <a href="#philosophy">Philosophy</a>
+        <a href="#about">About</a>
+        <a href="login.html">Login</a>
+        <a href="#contact">Contact</a>
+      </div>
+    </header>
+
+    <main class="hero">
+      <div class="hero-left">
+        <h1>Know Thy Self</h1>
+        <p>
+          Decode your personality signature through an immersive MBTI
+          assessment. Get insights, cognitive composition, and curated
+          recommendations.
+        </p>
+
+        <div class="cta-row">
+          <button class="btn-glow" onclick="startAssessment()">
+            Start Assessment
+          </button>
+          <button class="btn-ghost" onclick="scrollToAbout()">Explore</button>
+        </div>
+      </div>
+
+      <div class="hero-right">
+        <div class="glass-card">
+          <h2>System Overview</h2>
+          <p class="mini">
+            20 adaptive statements • 7-point scale • instant analysis • dynamic
+            graphs • recommendation engine
+          </p>
+          <div class="chip-grid">
+            <div class="chip"><span>EI</span> Energy</div>
+            <div class="chip"><span>SN</span> Perception</div>
+            <div class="chip"><span>TF</span> Decisions</div>
+            <div class="chip"><span>JP</span> Structure</div>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <section class="sections">
+      <div class="glass-card" id="philosophy">
+        <div class="section-title">Our Philosophy</div>
+        <p class="section-text">
+          Knowing yourself is the start of all wisdom. This platform helps you
+          observe your natural tendencies — how you process information,
+          interact socially, make decisions, and organize life. The goal is not
+          to label you, but to help you understand your patterns so you can grow
+          with clarity. Our MBTI-based analysis highlights strengths, potential
+          blind spots, and areas where you can improve. With structured insights
+          and recommendations, you can align your habits with your personality
+          and make better choices in academics, careers, relationships, and
+          personal growth.
+        </p>
+      </div>
+
+      <div class="glass-card" id="about">
+        <div class="section-title">About Us</div>
+        <p class="section-text">
+          Know Thy Self is a student-built project that blends psychology and
+          technology to deliver an interactive personality assessment
+          experience. It includes a structured MBTI quiz, real-time scoring, and
+          an insight dashboard that visually displays your cognitive
+          composition. Additionally, our recommendation module suggests books,
+          songs, movies, and career pathways tailored to your personality type.
+          This project was developed as a practical implementation of full-stack
+          concepts while creating something engaging, informative, and helpful
+          for self-discovery.
+        </p>
+      </div>
+    </section>
+
+    <!-- CONTACT US -->
+    <div class="glass-card" id="contact">
+      <div class="section-title">Contact Us</div>
+
+      <p class="section-text" style="margin-bottom: 16px">
+        Got feedback or want to collaborate? Reach us using the coordinates
+        below.
+      </p>
+
+      <div style="display: grid; gap: 12px; margin-top: 8px">
+        <div
+          style="
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 14px 16px;
+            border-radius: 16px;
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            background: rgba(255, 255, 255, 0.02);
+          "
+        >
+          <span
+            style="
+              font-size: 22px;
+              filter: drop-shadow(0 0 10px rgba(0, 242, 255, 0.35));
+            "
+          >
+            📞
+          </span>
+          <div style="font-size: 1.1rem; color: #d0dbe6">
+            <span
+              style="
+                color: var(--highlight);
+                font-weight: 800;
+                letter-spacing: 1px;
+              "
+              >Phone:</span
+            >
+            +91 98765 43210
+          </div>
+        </div>
+
+        <div
+          style="
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 14px 16px;
+            border-radius: 16px;
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            background: rgba(255, 255, 255, 0.02);
+          "
+        >
+          <span
+            style="
+              font-size: 22px;
+              filter: drop-shadow(0 0 10px rgba(0, 242, 255, 0.35));
+            "
+          >
+            ✉️
+          </span>
+          <div style="font-size: 1.1rem; color: #d0dbe6">
+            <span
+              style="
+                color: var(--highlight);
+                font-weight: 800;
+                letter-spacing: 1px;
+              "
+              >Email:</span
+            >
+            knowthyself.team@gmail.com
+          </div>
+        </div>
+
+        <div
+          style="
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 14px 16px;
+            border-radius: 16px;
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            background: rgba(255, 255, 255, 0.02);
+          "
+        >
+          <span
+            style="
+              font-size: 22px;
+              filter: drop-shadow(0 0 10px rgba(0, 242, 255, 0.35));
+            "
+          >
+            📍
+          </span>
+          <div style="font-size: 1.1rem; color: #d0dbe6">
+            <span
+              style="
+                color: var(--highlight);
+                font-weight: 800;
+                letter-spacing: 1px;
+              "
+              >Location:</span
+            >
+            KSD’s Model College, Dombivli
+          </div>
+        </div>
+      </div>
+
+      <p class="section-text" style="margin-top: 18px; opacity: 0.85">
+        <span style="color: var(--highlight); font-weight: 800">Note:</span>
+        This is a student project prototype. Contact details are for demo
+        purpose.
+      </p>
+    </div>
+
+    <footer>
+      <span style="font-family: Arial, sans-serif">&copy;</span> 2026
+      KnowThySelf
+    </footer>
+
+    <script>
+      // Particles (same style as other pages)
+      const canvas = document.getElementById("particleCanvas");
+      const ctx = canvas.getContext("2d");
+      let particles = [];
+
+      function resize() {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+      }
+      window.addEventListener("resize", resize);
+      resize();
+
+      class Particle {
+        constructor() {
+          this.x = Math.random() * canvas.width;
+          this.y = Math.random() * canvas.height;
+          this.vy = Math.random() * 0.5 + 0.3;
+          this.size = Math.random() * 2 + 1;
+          this.op = Math.random() * 0.5 + 0.2;
+        }
+        update() {
+          this.y += this.vy;
+          this.x += Math.sin(this.y * 0.01) * 0.3;
+          if (this.y > canvas.height) {
+            this.y = -10;
+            this.x = Math.random() * canvas.width;
+          }
+        }
+        draw() {
+          ctx.beginPath();
+          ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+          ctx.fillStyle = `rgba(255,255,255,${this.op})`;
+          ctx.fill();
+        }
+      }
+
+      for (let i = 0; i < 100; i++) particles.push(new Particle());
+
+      function animate() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        particles.forEach((p) => {
+          p.update();
+          p.draw();
+        });
+        requestAnimationFrame(animate);
+      }
+      animate();
+
+      function startAssessment() {
+        document.body.classList.add("fade-out");
+        setTimeout(() => (window.location.href = "login.html"), 450);
+      }
+
+      let exploreStep = 0;
+
+      function scrollToAbout() {
+        const sections = ["philosophy", "about", "contact"];
+        const targetId = sections[exploreStep % sections.length];
+        document
+          .getElementById(targetId)
+          .scrollIntoView({ behavior: "smooth" });
+        exploreStep++;
+      }
+    </script>
+  </body>
+</html>
