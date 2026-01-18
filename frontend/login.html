@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>KnowThySelf | Login</title>
+
+    <link
+      href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <style>
+      :root {
+        --bg-dark: #00050a;
+        --highlight: #00f2ff;
+        --contrast: #2979ff;
+        --text-main: #ffffff;
+        --text-muted: #8ba4b6;
+
+        --glass-bg: linear-gradient(
+          135deg,
+          rgba(255, 255, 255, 0.03),
+          rgba(255, 255, 255, 0.01)
+        );
+        --glass-border: rgba(255, 255, 255, 0.08);
+        --glass-shine: rgba(255, 255, 255, 0.15);
+      }
+
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      body {
+        font-family: "Rajdhani", sans-serif;
+        background: var(--bg-dark);
+        color: var(--text-main);
+        min-height: 100vh;
+        overflow-x: hidden;
+      }
+
+      .animated-bg {
+        position: fixed;
+        inset: 0;
+        z-index: -2;
+        background: radial-gradient(
+          circle at 50% 50%,
+          #051525 0%,
+          #00050a 100%
+        );
+        background-size: 200% 200%;
+        animation: deepPulse 15s ease infinite alternate;
+      }
+      @keyframes deepPulse {
+        0% {
+          background-position: 0% 50%;
+        }
+        100% {
+          background-position: 100% 50%;
+        }
+      }
+
+      #particleCanvas {
+        position: fixed;
+        inset: 0;
+        z-index: -1;
+        opacity: 0.6;
+      }
+
+      header {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 35px 20px 10px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+      .brand {
+        font-size: 1.3rem;
+        font-weight: 700;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        color: var(--highlight);
+        text-shadow: 0 0 15px rgba(0, 242, 255, 0.4);
+      }
+      .back {
+        color: var(--text-muted);
+        text-decoration: none;
+        font-weight: 700;
+        letter-spacing: 2px;
+        padding: 10px 14px;
+        border-radius: 30px;
+        border: 1px solid rgba(255, 255, 255, 0.12);
+        background: rgba(255, 255, 255, 0.02);
+        transition: 0.25s;
+      }
+      .back:hover {
+        color: var(--highlight);
+        border-color: var(--highlight);
+        box-shadow: 0 0 15px rgba(0, 242, 255, 0.2);
+      }
+
+      .wrap {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 25px 20px 55px;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 25px;
+        align-items: center;
+      }
+
+      .glass-card {
+        background: var(--glass-bg);
+        backdrop-filter: blur(25px);
+        -webkit-backdrop-filter: blur(25px);
+        border: 1px solid var(--glass-border);
+        border-top: 1px solid var(--glass-shine);
+        border-left: 1px solid var(--glass-shine);
+        border-radius: 22px;
+        box-shadow: 0 30px 60px rgba(0, 0, 0, 0.65);
+        padding: 28px;
+        position: relative;
+        overflow: hidden;
+        animation: fadeIn 0.5s ease;
+      }
+      .glass-card::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 3px;
+        background: linear-gradient(
+          90deg,
+          transparent,
+          var(--highlight),
+          transparent
+        );
+        box-shadow: 0 0 12px var(--highlight);
+      }
+
+      .title {
+        font-size: clamp(2rem, 4vw, 3rem);
+        font-weight: 800;
+        letter-spacing: 3px;
+        text-transform: uppercase;
+        color: var(--highlight);
+        text-shadow: 0 0 22px rgba(0, 242, 255, 0.35);
+        line-height: 1.05;
+      }
+      .sub {
+        margin-top: 10px;
+        color: #d0dbe6;
+        font-size: 1.15rem;
+        line-height: 1.6;
+      }
+
+      label {
+        display: block;
+        margin: 12px 0 6px;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+        font-weight: 700;
+        font-size: 0.95rem;
+        color: var(--text-muted);
+      }
+
+      input {
+        width: 100%;
+        padding: 13px 14px;
+        border-radius: 14px;
+        border: 1px solid rgba(255, 255, 255, 0.14);
+        background: rgba(0, 0, 0, 0.35);
+        color: #fff;
+        outline: none;
+        font-size: 1.05rem;
+      }
+      input:focus {
+        border-color: var(--highlight);
+        box-shadow: 0 0 15px rgba(0, 242, 255, 0.25);
+      }
+
+      .btn-glow {
+        width: 100%;
+        margin-top: 16px;
+        padding: 15px 18px;
+        background: rgba(0, 242, 255, 0.05);
+        border: 1px solid var(--highlight);
+        color: var(--highlight);
+        font-weight: 800;
+        text-transform: uppercase;
+        letter-spacing: 3px;
+        border-radius: 12px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        text-shadow: 0 0 8px var(--highlight);
+      }
+      .btn-glow:hover {
+        background: var(--highlight);
+        color: #000;
+        box-shadow: 0 0 40px rgba(0, 242, 255, 0.55);
+        transform: translateY(-2px);
+      }
+
+      .msg {
+        margin-top: 12px;
+        font-weight: 700;
+        letter-spacing: 1px;
+      }
+      .error {
+        color: #ff6b6b;
+      }
+      .ok {
+        color: #7cffb2;
+      }
+
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(12px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      .fade-out {
+        opacity: 0;
+        transition: opacity 0.5s ease;
+      }
+
+      @media (max-width: 900px) {
+        .wrap {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="animated-bg"></div>
+    <canvas id="particleCanvas"></canvas>
+
+    <header>
+      <div class="brand">Know Thy Self</div>
+      <a class="back" href="home.html">← Back Home</a>
+    </header>
+
+    <main class="wrap">
+      <!-- Left Info Card -->
+      <section class="glass-card">
+        <div class="title">Access Portal</div>
+        <p class="sub">
+          Enter your details to begin the assessment. Your information is used
+          only to store visitor logs and improve system accuracy.
+        </p>
+        <p class="sub" style="opacity: 0.9">
+          <span style="color: var(--highlight); font-weight: 800">Tip:</span>
+          Use a valid email so your session can be identified if required.
+        </p>
+      </section>
+
+      <!-- Right Form Card -->
+      <section class="glass-card">
+        <div class="title" style="font-size: 2.1rem">Login / Register</div>
+        <p class="sub" style="margin-bottom: 8px">
+          Proceed to MBTI test sequence.
+        </p>
+
+        <form id="visitorForm">
+          <label for="name">Full Name</label>
+          <input id="name" type="text" placeholder="Enter your name" required />
+
+          <label for="email">Email</label>
+          <input
+            id="email"
+            type="email"
+            placeholder="Enter your email"
+            required
+          />
+
+          <label for="age">Age</label>
+          <input id="age" type="number" placeholder="Enter your age" required />
+
+          <button class="btn-glow" type="submit">Continue →</button>
+          <div id="message" class="msg"></div>
+        </form>
+      </section>
+    </main>
+
+    <script>
+      // particles
+      const canvas = document.getElementById("particleCanvas");
+      const ctx = canvas.getContext("2d");
+      let particles = [];
+
+      function resize() {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+      }
+      window.addEventListener("resize", resize);
+      resize();
+
+      class Particle {
+        constructor() {
+          this.x = Math.random() * canvas.width;
+          this.y = Math.random() * canvas.height;
+          this.vy = Math.random() * 0.5 + 0.3;
+          this.size = Math.random() * 2 + 1;
+          this.op = Math.random() * 0.5 + 0.2;
+        }
+        update() {
+          this.y += this.vy;
+          this.x += Math.sin(this.y * 0.01) * 0.3;
+          if (this.y > canvas.height) {
+            this.y = -10;
+            this.x = Math.random() * canvas.width;
+          }
+        }
+        draw() {
+          ctx.beginPath();
+          ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+          ctx.fillStyle = `rgba(255,255,255,${this.op})`;
+          ctx.fill();
+        }
+      }
+
+      for (let i = 0; i < 100; i++) particles.push(new Particle());
+
+      function animate() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        particles.forEach((p) => {
+          p.update();
+          p.draw();
+        });
+        requestAnimationFrame(animate);
+      }
+      animate();
+
+      // backend URL
+      const API_BASE = "http://localhost:5000";
+
+      const form = document.getElementById("visitorForm");
+      const messageBox = document.getElementById("message");
+
+      form.addEventListener("submit", async (e) => {
+        e.preventDefault();
+        messageBox.textContent = "";
+        messageBox.className = "msg";
+
+        const name = document.getElementById("name").value.trim();
+        const email = document.getElementById("email").value.trim();
+        const age = document.getElementById("age").value.trim();
+
+        if (!name || !email || !age) {
+          messageBox.textContent = "Please fill all details.";
+          messageBox.classList.add("error");
+          return;
+        }
+
+        // ✅ store user for later (dashboard/reco optional)
+        localStorage.setItem(
+          "mbtiUser",
+          JSON.stringify({ name, email, age: Number(age) })
+        );
+
+        const visitorData = {
+          name,
+          email,
+          age: Number(age),
+          userAgent: navigator.userAgent,
+          platform: navigator.platform,
+        };
+
+        try {
+          const res = await fetch(`${API_BASE}/api/visitors`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(visitorData),
+          });
+
+          if (!res.ok) throw new Error("Failed to store visitor data");
+
+          messageBox.textContent = "Saved ✅ Redirecting...";
+          messageBox.classList.add("ok");
+
+          document.body.classList.add("fade-out");
+          setTimeout(() => {
+            window.location.href = "test.html";
+          }, 500);
+        } catch (err) {
+          console.error(err);
+          messageBox.textContent =
+            "Backend not running / error storing data. Please try again.";
+          messageBox.classList.add("error");
+        }
+      });
+    </script>
+  </body>
+</html>
